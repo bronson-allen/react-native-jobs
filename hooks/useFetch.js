@@ -26,11 +26,12 @@ const useFetch = (endpoint, query) => {
       setIsLoading(false);
     } catch (error) {
       setError(error);
-      alert("There was an error");
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
   };
+
   useEffect(() => {
     fetchData();
   }, []);

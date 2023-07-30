@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     ...SHADOWS.medium,
     shadowColor: COLORS.white,
+    margin: SIZES.small,
   }),
   logoContainer: (selectedJob, item) => ({
     width: 50,

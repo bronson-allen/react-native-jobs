@@ -7,22 +7,29 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { COLORS, SIZES } from "../../../constants";
-import PopularJobCard from "../../common/cards/popular/PopularJobCard";
-import useFetch from "../../../hooks/useFetch";
 import testData from "../../../app/test-data";
+import { COLORS, SIZES } from "../../../constants";
+import useFetch from "../../../hooks/useFetch";
+import PopularJobCard from "../../common/cards/popular/PopularJobCard";
 
 import styles from "./popularjobs.style";
 
 const Popularjobs = () => {
   const router = useRouter();
-  const data = testData;
-  const isLoading = false;
-  const error = null;
-  // const { data, isLoading, error } = useFetch("search", {
-  //   query: "React developer",
-  //   num_pages: "1",
-  // });
+  // const data = testData;
+  // const isLoading = false;
+  // const error = null;
+  const { data, isLoading, error } = useFetch("search", {
+    query: "React developer",
+    num_pages: "1",
+  });
+
+  const [selectedJob, setSelectedJob] = useState();
+
+  const handleCardPress = (item) => {
+    router.push(`/job-details/${item.job_id}`);
+    setSelectedJob(item.job_id);
+  };
 
   console.log("data:", data);
   return (
@@ -40,8 +47,14 @@ const Popularjobs = () => {
           <Text>Something went wrong</Text>
         ) : (
           <FlatList
-            data={[1, 2, 3, 4, 5, 6, 7, 8]}
-            renderItem={({ item }) => <PopularJobCard item={item} />}
+            data={data}
+            renderItem={({ item }) => (
+              <PopularJobCard
+                item={item}
+                selectedJob={selectedJob}
+                handleCardPress={handleCardPress}
+              />
+            )}
             keyExtractor={(item) => item?.job_id}
             contentContainerStyle={SIZES.medium}
             horizontal
